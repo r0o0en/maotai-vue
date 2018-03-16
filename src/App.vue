@@ -22,6 +22,17 @@
     }
 </script>
 
-<style scoped>
-
+<style scoped lang="less" type="text/less">
+    #app{
+        background-image: url("assets/logo.png");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 80px auto;
+        p{
+            background-image: url("assets/logo.png");
+            background-repeat: no-repeat;
+            background-position: left center;
+            background-size: 16px auto;
+        }
+    }
 </style>
