@@ -1,8 +1,8 @@
 <template>
     <div>
-        <p>about.vue</p>
+        <p>join.vue</p>
         <p>{{pageinfo}}</p>
-        <p><button v-on:click="$store.commit('add')">count + 1</button></p>
+        <p><button v-on:click="$store.commit('remove')">count - 1</button></p>
     </div>
 </template>
 
@@ -11,7 +11,7 @@
         name: "",
         data(){
             return {
-                pageinfo:'这是about.vue data.pageinfo'
+                pageinfo:'这里是 join.uve data.pageinfo'
             }
         }
     }
