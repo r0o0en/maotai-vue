@@ -11,6 +11,7 @@
         <button v-on:click="say()">say</button>
         <router-view></router-view>
         <mt-button type="primary">按钮</mt-button>
+        <img src="../static/logo.png" alt=""/>
     </div>
 
 </template>
@@ -35,6 +36,7 @@
 
 <style scoped>
     #app{
+        background: url("../static/logo.png") no-repeat center /auto;
         border-bottom: 1px solid #3f59ff;
     }
 </style>

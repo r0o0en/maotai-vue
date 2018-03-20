@@ -1,3 +1,5 @@
+module.exports = function(env){
+console.log(env);
 /*=====================
 *   引入模块
 * =====================*/
@@ -9,20 +11,31 @@ const  Path = require('path');
 const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
 // /*html编译    模块*/
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+/*JS 压缩 模块*/
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 /*=====================
 *   公共参数
 * =====================*/
 //项目名称
 let projectName = "吉粮茅台";
 // 开发环境?
-let isdev = true;
+let envInt = ['server','dev','build'].indexOf(env.env);
 // 兼容IE?
 let inIE = false;
 //编译文件存放目录
 let path_dist = Path.join(__dirname,'dist');
 //生产开发代码
 let path_src = Path.join(__dirname,'src');
-
+//node服务器端口
+let port = '8888';
+//node服务器 启动时，页面引用图片的绝对路径
+let location_server = 'http://localhost:'+port+'/';
+//本地测试打包时，页面引用图片的绝对路径
+let location_dev = 'http://192.168.100.178/maotai-vue/dist/';
+//线上版本打包时，页面引用图片的绝对路径
+let location_build = 'http://192.168.100.178/maotai-vue/dist/';
+//后续配置统一调用的 绝对路径变量
+let path_absolute = [location_server,location_dev,location_build][envInt < 0 ? 1 : envInt];
 /*=====================
 *   实例化模块
 * =====================*/
@@ -42,7 +55,11 @@ let htmlIndex = new HtmlWebpackPlugin({
     ,favicon:Path.join(__dirname,'static','favicon.ico')
     //,hash:true
 });
-
+/*js压缩*/
+let jsCompress = new UglifyJsPlugin({
+    // sourceMap: true,//使用源映射将错误消息位置映射到模块（这会降低编译速度）
+    // warningsFilter:false //允许过滤uglify警告
+});
 /*=====================
 *   输出配置
 * =====================*/
@@ -55,6 +72,7 @@ modules.entry = {
 /*出口文件*/
 modules.output = {
     path:path_dist,
+    // publicPath:path_absolute,
     filename:Path.join("js","[name].[chunkHash:5].js")
 };
 /*loader 文件编译规则配置*/
@@ -93,6 +111,25 @@ modules.module.rules = [
             ]
         })
     }
+    ,{
+        test: /\.(png|jpg|gif)$/,
+        use: [
+            {
+                loader: 'url-loader',
+                options: {
+                    name:function(file){
+                        console.log('url',file,arguments);
+                        return '[path][name].[ext]';
+                    }
+                    ,limit:10
+                    // ,publicPath:'static/'
+                    // ,useRelativePath:true
+                    // ,outputPath:'[path]'
+                    ,publicPath:path_absolute
+                }
+            }
+        ]
+    }
 ];
 
 /*=====================
@@ -102,13 +139,15 @@ modules.plugins = [
     style,
     htmlIndex
 ];
-
+/*js压缩,请只在生产环境下使用*/
+envInt > 1 ? modules.plugins.push(jsCompress) : delete jsCompress;
 /*=====================
 *   热更新 webpack-dev-server
 * =====================*/
-if(isdev){
+if( envInt === 1 ){
     modules.devServer =  {
         contentBase: path_src
+        ,port:port
     }
 }
 
@@ -122,6 +161,7 @@ modules.resolve = {
         'vue': 'vue/dist/vue.js'
     }
 };
-
+return modules;
 /*输出*/
-module.exports = modules;
+// module.exports = modules;
+};
