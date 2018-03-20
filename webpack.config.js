@@ -26,6 +26,8 @@ let inIE = false;
 let path_dist = Path.join(__dirname,'dist');
 //生产开发代码
 let path_src = Path.join(__dirname,'src');
+
+/*    */
 //node服务器端口
 let port = '8888';
 //node服务器 启动时，页面引用图片的绝对路径
@@ -106,7 +108,7 @@ modules.module.rules = [
                         minimize:true
                     }
                 },
-                // 'postcss-loader',
+                'postcss-loader',
                 'less-loader'
             ]
         })
