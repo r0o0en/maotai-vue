@@ -31,7 +31,8 @@ let path_src = Path.join(__dirname,'src');
 //node服务器端口
 let port = '8888';
 //node服务器 启动时，页面引用图片的绝对路径
-let location_server = 'http://localhost:'+port+'/';
+// let location_server = 'http://localhost:'+port+'/';
+let location_server = '/';
 //本地测试打包时，页面引用图片的绝对路径
 let location_dev = 'http://192.168.100.178/maotai-vue/dist/';
 //线上版本打包时，页面引用图片的绝对路径
@@ -158,11 +159,11 @@ if( envInt === 1 ){
 *   npm默认导出的是运行时构建版本，不含 template 编辑器（template包含在独立构建/完整版本中）
 *
 * =====================*/
-modules.resolve = {
-    alias: {
-        'vue': 'vue/dist/vue.js'
-    }
-};
+// modules.resolve = {
+//     alias: {
+//         'vue': 'vue/dist/vue.js'
+//     }
+// };
 return modules;
 /*输出*/
 // module.exports = modules;

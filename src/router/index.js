@@ -3,19 +3,22 @@ import VueRouter from 'vue-router';
 
 Vue.use(VueRouter);
 
-import About from '../view/about.vue';
-import Join from '../view/join.vue';
+// import About from '../view/about.vue';
+// import Join from '../view/join.vue';
+
+const  About = () => import("../view/about.vue");
+const  Join = () => import("../view/join.vue");
 
 const routes = [
     {
         name:'aoubt',
         path:'/about',
-        component:h => h(About)
+        component:About
     }
     ,{
         name:'join',
         path:'/join',
-        component:h=>h(Join)
+        component:Join
     }
 ];
 

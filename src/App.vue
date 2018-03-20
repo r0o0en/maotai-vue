@@ -17,8 +17,6 @@
 </template>
 
 <script>
-    import Mint from 'mint-ui';
-
     export default {
         name: "App",
         data:function(){
