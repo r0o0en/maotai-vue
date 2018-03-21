@@ -13,6 +13,8 @@ const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 /*JS 压缩 模块*/
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+/*公共资源分离    模块*/
+const CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
 /*=====================
 *   公共参数
 * =====================*/
@@ -56,20 +58,30 @@ let htmlIndex = new HtmlWebpackPlugin({
     ,inject:true
     ,chunksSortMode: "dependency" //资源载入顺序：从属顺序
     ,favicon:Path.join(__dirname,'static','favicon.ico')
-    //,hash:true
+    // ,hash:true
 });
 /*js压缩*/
 let jsCompress = new UglifyJsPlugin({
     // sourceMap: true,//使用源映射将错误消息位置映射到模块（这会降低编译速度）
     // warningsFilter:false //允许过滤uglify警告
 });
+/*第三方公共库分离*/
+let vendorSeparate =  new CommonsChunkPlugin({
+        //为什么要额外加入一个 不纯在的 chunk ： manifest
+        //利用CommonsChunkPlugin生成一个专门跟踪vendor.js变化的js文件，取名manifest.js
+        //当main.js改变时，只会改变mainfest.js，而不会改变 vendor.js
+        //https://www.cnblogs.com/femonzor/p/6642023.html
+        names:['vendor','manifest']
+});
 /*=====================
 *   输出配置
 * =====================*/
+
 const modules = {} ;
 /*入口文件*/
 modules.entry = {
     // vendor: inIE ?  ["vue","vue-router","vuex","babel-polyfill"] : ["vue","vue-router","vuex"],
+    vendor: ["vue","vue-router","vuex",'mint-ui'],
     app: Path.join(path_src,"main.js")
 };
 /*出口文件*/
@@ -121,7 +133,6 @@ modules.module.rules = [
                 loader: 'url-loader',
                 options: {
                     name:function(file){
-                        console.log('url',file,arguments);
                         return '[path][name].[ext]';
                     }
                     ,limit:10
@@ -140,7 +151,8 @@ modules.module.rules = [
 * =====================*/
 modules.plugins = [
     style,
-    htmlIndex
+    htmlIndex,
+    vendorSeparate
 ];
 /*js压缩,请只在生产环境下使用*/
 envInt > 1 ? modules.plugins.push(jsCompress) : delete jsCompress;
