@@ -80,8 +80,7 @@ let vendorSeparate =  new CommonsChunkPlugin({
 const modules = {} ;
 /*入口文件*/
 modules.entry = {
-    // vendor: inIE ?  ["vue","vue-router","vuex","babel-polyfill"] : ["vue","vue-router","vuex"],
-    vendor: ["vue","vue-router","vuex",'mint-ui'],
+    vendor: inIE ?  ["babel-polyfill","vue","vue-router","vuex",'mint-ui'] : ["vue","vue-router","vuex",'mint-ui'],
     app: Path.join(path_src,"main.js")
 };
 /*出口文件*/
