@@ -1,40 +1,44 @@
 <template>
-    <div id="app">
-        <h1>{{name}}</h1>
-        <p>vuex $store.state.count = {{$store.state.count}}</p>
-        <nav>
-            <ul>
-                <li><router-link to="/about">about</router-link></li>
-                <li><router-link to="/join">join</router-link></li>
-            </ul>
-        </nav>
-        <button v-on:click="say()">say</button>
-        <router-view></router-view>
-        <mt-button type="primary">按钮</mt-button>
-        <img src="../static/logo.png" alt=""/>
+    <div id="app" :class="{'footer-show':$store.state.footerShow}">
+        <main-tabbar v-show="$store.state.footerShow"></main-tabbar>
+        <router-view class="view view-app" :style="{height:viewHeight+'px'}"></router-view>
     </div>
-
 </template>
 
 <script>
+    import vue from 'vue';
+    import MainTabbar from './components/MainTabbar.vue';
+    vue.component('MainTabbar',MainTabbar);
     export default {
         name: "App",
         data:function(){
             return {
-                name:'app.vue => data.name'
+                // fullHeight: 'auto',//loadmore高度
+                fullHeight: document.documentElement.clientHeight,//loadmore高度
             }
         },
-        methods:{
-          say(){
-              console.log(this,this.say);
+        mounted() {
+            // 动态设置背景图的高度为浏览器可视区域高度
+
+            // 首先在Virtual DOM渲染数据时，设置下背景图的高度．
+            this.fullHeight = `${document.documentElement.clientHeight}`;
+            // 然后监听window的resize事件．在浏览器窗口变化时再设置下背景图高度．
+            const that = this;
+            window.onresize = function temp() {
+                that.fullHeight = `${document.documentElement.clientHeight}`;
+            };
+        },
+        computed:{
+          viewHeight(){
+              console.log(this.fullHeight);
+              return ( this.$store.state.footerShow ? this.fullHeight - 55 : this.fullHeight );
           }
-        }
+        },
+        methods:{
+
+        },
     }
 </script>
 
-<style scoped>
-    #app{
-        background: url("../static/logo.png") no-repeat center /auto;
-        border-bottom: 1px solid #3f59ff;
-    }
+<style>
 </style>
