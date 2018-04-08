@@ -41,7 +41,7 @@
         watch:{
             'selected':{
                 handler(to,from){
-                    console.log('Tabbar selected()',to,from);
+                    // console.log('Tabbar selected()',to,from);
                     if(to==='优品区'){
                         this.$router.push('/home');
                     }else if(to==='积分区'){
@@ -55,18 +55,14 @@
             },
         }
         ,created(){
-            console.log('MainTabbar.vue created()',this.$route);
+            // console.log('MainTabbar.vue created()',this.$route);
             if( this.$route.path == "/home" ){
-                console.log('优品区');
                 this.selected = '优品区';
             }else if( this.$route.path == "/scorecard" ) {
-                console.log('积分区');
                 this.selected = '积分区';
             }else if( this.$route.path == "/shoppingcart" ) {
-                console.log('购物车');
                 this.selected = '购物车';
             }else if( this.$route.path == "/my" ) {
-                console.log('我的');
                 this.selected = '我的';
             }
         }
