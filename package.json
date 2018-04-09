@@ -4,7 +4,7 @@
   "description": "Maotai project changes, using the vue + vueRouter + vux + mintUi development",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --open --env.env server",
+    "start": "webpack-dev-server --open --env.env server ",
     "dev": "webpack --env.env dev",
     "build": "webpack --env.env build "
   },

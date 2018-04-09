@@ -10,44 +10,77 @@
 }
 /*====================
   transition 过渡 - 1
+  淡入淡出
+  enter:进入
+  leave:离开
+*====================*/
+@fadeName:fade;
+//向左切换：
+.@{fadeName}-enter{
+  opacity: 0;
+}
+.@{fadeName}-enter-to{
+  opacity: 1;
+}
+.@{fadeName}-enter-active{
+  transition: @enter-time ;
+}
+.@{fadeName}-leave{
+  opacity: 1;
+  //transform:translateX(0);
+}
+.@{fadeName}-leave-to{
+  opacity: 0;
+  //transform:translateX(-100%);
+}
+.@{fadeName}-leave-active{
+  //transition: @leave-time;
+  transition: opacity @leave-time;
+}
+
+
+/*====================
+  transition 过渡 - 1
   一个x轴向左和向右滑动进入消失效果。
   enter:进入
   leave:离开
 *====================*/
 @enter-time:0.6s;
 @leave-time:1s;
+@leftName:left;
+@rightName:right;
 //向左切换：
-.left-enter{
+.@{leftName}-enter{
   transform:translateX(100%);
 }
-.left-enter-to{
+.@{leftName}-enter-to{
   transform:translateX(0);
 }
-.left-enter-active{
+.@{leftName}-enter-active{
   transition: @enter-time ;
 }
-.left-leave{
+.@{leftName}-leave{
   opacity: 1;
   //transform:translateX(0);
 }
-.left-leave-to{
+.@{leftName}-leave-to{
   opacity: 0.9;
   //transform:translateX(-100%);
 }
-.left-leave-active{
+.@{leftName}-leave-active{
   //transition: @leave-time;
   transition: opacity @leave-time;
 }
 //向右切换：
-.right-enter{
+.@{rightName}-enter{
   transform:translateX(-100%);
 }
-.right-enter-active{
+.@{rightName}-enter-active{
   transition: @enter-time;
 }
-.right-leave-to{
+.@{rightName}-leave-to{
   transform:translateX(100%);
 }
-.right-leave-active{
+.@{rightName}-leave-active{
   transition: @leave-time;
 }

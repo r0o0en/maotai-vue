@@ -22,6 +22,7 @@ const CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
 let projectName = "吉粮茅台";
 // 开发环境?
 let envInt = ['server','dev','build'].indexOf(env.env);
+console.log(envInt);
 // 兼容IE?
 let inIE = false;
 //编译文件存放目录
@@ -158,10 +159,12 @@ envInt > 1 ? modules.plugins.push(jsCompress) : delete jsCompress;
 /*=====================
 *   热更新 webpack-dev-server
 * =====================*/
-if( envInt === 1 ){
+if( envInt === 0 ){
+    // --host 192.168.1.176
     modules.devServer =  {
-        contentBase: path_src
-        ,port:port
+        contentBase: path_src,
+        port:port,
+        host:"192.168.1.176",
     }
 }
 

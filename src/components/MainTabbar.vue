@@ -53,9 +53,12 @@
                     }
                 }
             },
+            // '$route'(to,from){
+            //     console.log('MainTabbar.vue $route',to,from);
+            // },
         }
         ,created(){
-            // console.log('MainTabbar.vue created()',this.$route);
+            console.log('MainTabbar.vue created()',this.$route);
             if( this.$route.path == "/home" ){
                 this.selected = '优品区';
             }else if( this.$route.path == "/scorecard" ) {

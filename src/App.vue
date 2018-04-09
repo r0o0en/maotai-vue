@@ -39,9 +39,14 @@
         },
         watch:{
             '$route' (to, from) {
-                const toDepth = to.path.split('/').length;
-                const fromDepth = from.path.split('/').length;
-                this.transitionName = toDepth < fromDepth ? 'right' : 'left';
+                if( from.path == '/'){
+                    //第一次加载时，第一个路由使用淡入
+                    this.transitionName = 'fade';
+                }else{
+                    const toDepth = to.path.split('/').length;
+                    const fromDepth = from.path.split('/').length;
+                    this.transitionName = toDepth < fromDepth ? 'right' : 'left';
+                }
             }
         },
     }
