@@ -1,0 +1,53 @@
+.view{
+  background-color: white;
+  position: absolute;z-index: 0;
+  top:0;
+  left: 0;
+  right: 0;
+  & ~ & {
+    z-index: 1;
+  }
+}
+/*====================
+  transition 过渡 - 1
+  一个x轴向左和向右滑动进入消失效果。
+  enter:进入
+  leave:离开
+*====================*/
+@enter-time:0.6s;
+@leave-time:1s;
+//向左切换：
+.left-enter{
+  transform:translateX(100%);
+}
+.left-enter-to{
+  transform:translateX(0);
+}
+.left-enter-active{
+  transition: @enter-time ;
+}
+.left-leave{
+  opacity: 1;
+  //transform:translateX(0);
+}
+.left-leave-to{
+  opacity: 0.9;
+  //transform:translateX(-100%);
+}
+.left-leave-active{
+  //transition: @leave-time;
+  transition: opacity @leave-time;
+}
+//向右切换：
+.right-enter{
+  transform:translateX(-100%);
+}
+.right-enter-active{
+  transition: @enter-time;
+}
+.right-leave-to{
+  transform:translateX(100%);
+}
+.right-leave-active{
+  transition: @leave-time;
+}

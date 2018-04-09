@@ -1,7 +1,9 @@
 <template>
-    <div id="app" :class="{'footer-show':$store.state.footerShow}">
+    <div id="app" :class="{'footer-show':$store.state.footerShow}" :style="{minHeight:fullHeight+'px'}">
         <main-tabbar v-show="$store.state.footerShow"></main-tabbar>
-        <router-view class="view view-app" :style="{height:viewHeight+'px'}"></router-view>
+        <transition :name="transitionName">
+            <router-view class="view view-app" :style="{height:viewHeight+'px'}"></router-view>
+        </transition>
     </div>
 </template>
 
@@ -15,6 +17,7 @@
             return {
                 // fullHeight: 'auto',//loadmore高度
                 fullHeight: document.documentElement.clientHeight,//loadmore高度
+                transitionName:'right',//路由过渡动画名
             }
         },
         mounted() {
@@ -34,8 +37,12 @@
               return ( this.$store.state.footerShow ? this.fullHeight - 55 : this.fullHeight );
           }
         },
-        methods:{
-
+        watch:{
+            '$route' (to, from) {
+                const toDepth = to.path.split('/').length;
+                const fromDepth = from.path.split('/').length;
+                this.transitionName = toDepth < fromDepth ? 'right' : 'left';
+            }
         },
     }
 </script>

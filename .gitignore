@@ -1,4 +1,5 @@
-css/**/*.css
+/css/*.css
+/css/**/*.css
 *.iml
 .idea
 /node_modules/

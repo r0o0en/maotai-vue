@@ -44,6 +44,10 @@ ol {
   头部
 *====================*/
 .main-header {
+  height: 40px;
+}
+.main-header,
+.main-header .mint-header {
   background-color: #26a2ff;
 }
 /*====================

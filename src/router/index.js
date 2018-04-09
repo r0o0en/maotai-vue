@@ -5,10 +5,12 @@ import store from "../vuex";
 Vue.use(VueRouter);
 
 const  Home = () => import("../view/Home.vue");
+const  Scorecard = () => import("../view/Scorecard.vue");
 
 const routes = [
     {name:'app', path:'/', redirect:{name:"home"},},
     {name:'home', path:'/home', component:Home,meta:{}},
+    {name:'scorecard', path:'/scorecard', component:Scorecard,meta:{}},
 ];
 
 const  router = new VueRouter({

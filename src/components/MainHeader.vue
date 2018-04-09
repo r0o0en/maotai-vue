@@ -1,5 +1,6 @@
 <template>
-    <mt-header :title="title" :fixed="fixed" :class="{'main-header':true}">
+    <div class="main-header">
+    <mt-header :title="title" :fixed="fixed">
         <template v-if="hasBack">
             <router-link to="/" slot="left" >
                 <mt-button icon="back">返回</mt-button>
@@ -9,6 +10,7 @@
             <slot name="right"></slot>
         </template>
     </mt-header>
+    </div>
 
 </template>
 
