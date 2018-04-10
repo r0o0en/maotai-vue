@@ -14,9 +14,7 @@ const store = new Vuex.Store({
         footerShow:true,//是否显示底部菜单
         isIOS:isIOS,
         isAndroid:isAndroid,
-        path:{
-
-        }
+        pathHistory:[]
     },
     mutations:{
 

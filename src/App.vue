@@ -39,14 +39,46 @@
         },
         watch:{
             '$route' (to, from) {
+                let history = this.$store.state.pathHistory;
                 if( from.path == '/'){
                     //第一次加载时，第一个路由使用淡入
+                    console.log('fade:firstRouter');
                     this.transitionName = 'fade';
+                    history.push(to.path);
                 }else{
-                    const toDepth = to.path.split('/').length;
-                    const fromDepth = from.path.split('/').length;
-                    this.transitionName = toDepth < fromDepth ? 'right' : 'left';
+                    console.log(to,from);
+                    //判断$store.state.pathHistory[]倒数第二个值 是否匹配 to.path?后退:前进
+                    let judge = history.indexOf(to.path);
+                    let homes = ['home','scorecard','shoppingcard','my'];
+                    if(homes.indexOf(from.name)>=0 && homes.indexOf(to.name)>=0){
+                        //如果是在首页4个页面中相互切换(homes[Array])，则使用淡入淡出，但是仍然要判断前进后退以此变更pathHistory
+                        this.transitionName = 'fade';
+                        if( judge === history.length-2 ){
+                            console.log('right home fade');
+                            history.splice(history.length-1,1);
+                        }else{
+                            console.log('left home fade');
+                            history.push(to.path);
+                        }
+                    }else if(history.length<=1){
+                        //记录长度为1时，路由操作必为前进
+                        console.log('left');
+                        this.transitionName = 'left';
+                        history.push(to.path);
+                    }else
+                    // //判断$store.state.pathHistory[]倒数第二个值 是否匹配 to.path?后退:前进
+                    // let judge = history.indexOf(to.path);
+                    if( judge === history.length-2 ){
+                        console.log('right');
+                        this.transitionName = 'right';
+                        history.splice(history.length-1,1);
+                    }else{
+                        console.log('left');
+                        this.transitionName = 'left';
+                        history.push(to.path);
+                    }
                 }
+                history = null;
             }
         },
     }

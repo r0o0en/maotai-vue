@@ -5,7 +5,7 @@
   left: 0;
   right: 0;
   & ~ & {
-    z-index: 1;
+
   }
 }
 /*====================
@@ -24,6 +24,7 @@
 }
 .@{fadeName}-enter-active{
   transition: @enter-time ;
+  z-index: 1;
 }
 .@{fadeName}-leave{
   opacity: 1;
@@ -58,6 +59,7 @@
 }
 .@{leftName}-enter-active{
   transition: @enter-time ;
+  z-index: 1;
 }
 .@{leftName}-leave{
   opacity: 1;
@@ -73,7 +75,10 @@
 }
 //向右切换：
 .@{rightName}-enter{
-  transform:translateX(-100%);
+  opacity: 0.9;
+}
+.@{rightName}-enter-to{
+  opacity: 1;
 }
 .@{rightName}-enter-active{
   transition: @enter-time;
@@ -83,4 +88,6 @@
 }
 .@{rightName}-leave-active{
   transition: @leave-time;
+  z-index: 1;
 }
+
